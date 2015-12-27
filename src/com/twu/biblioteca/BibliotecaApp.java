@@ -10,7 +10,8 @@ public class BibliotecaApp {
         createBooks();
     }
 
-    private List<Book> bookList;
+    private List<Book> libraryBookList;
+    private List<Book> currentBookList;
 
     public static void main(String[] args) {
         BibliotecaApp bibliotecaApp = new BibliotecaApp();
@@ -18,7 +19,7 @@ public class BibliotecaApp {
 
         bibliotecaApp.printBookListTitle();
 
-        bibliotecaApp.bookList.forEach(book -> {
+        bibliotecaApp.libraryBookList.forEach(book -> {
             printBookInfo(book);
         });
 
@@ -30,29 +31,47 @@ public class BibliotecaApp {
             input = in.next();
             switch (input) {
                 case "LIST-BOOKS":
-                    bibliotecaApp.bookList.forEach(book -> {
+                    bibliotecaApp.currentBookList.forEach(book -> {
                         printBookInfo(book);
                     });
                     break;
                 case "CHECK-OUT":
                     System.out.print("Please input the book name:");
-                    String bookName = in.next();
-                    if(bibliotecaApp.bookIsExist(bookName)) {
-                        bibliotecaApp.checkoutBook(bookName);
+                    String checkoutBookName = in.next();
+                    if(bibliotecaApp.currentBookIsExist(checkoutBookName)) {
+                        bibliotecaApp.checkoutBook(checkoutBookName);
                     } else {
                         System.out.println("That book is not bailable.");
                     }
                     break;
                 case "RETURN":
+                    System.out.print("Please input the book name:");
+                    String returnBookName = in.next();
+                    if(bibliotecaApp.bookIsExist(returnBookName)) {
+                        bibliotecaApp.returnBook(returnBookName);
+                    } else {
+                        System.out.println("That book is not bailable.");
+                    }
                     break;
                 case "QUIT":
                     return;
+                default:
+                    System.out.println("Select a valid option!");
             }
         } while (!"QUIT".equals(input));
     }
 
-    private boolean bookIsExist(String bookName) {
-        for (Book book : bookList) {
+    private boolean bookIsExist(String returnBookName) {
+        for (Book book : libraryBookList) {
+            if(book.getName().equals(returnBookName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean currentBookIsExist(String bookName) {
+        for (Book book : currentBookList) {
             if(book.getName().equals(bookName)) {
                 return true;
             }
@@ -60,10 +79,19 @@ public class BibliotecaApp {
         return false;
     }
 
-    private void checkoutBook(String bookName) {
-        for (int i = 0; i < bookList.size(); i++) {
-            if(bookName.equals(bookList.get(i).getName())) {
-                bookList.remove(i);
+    private void checkoutBook(String checkoutBookName) {
+        for (int i = 0; i < currentBookList.size(); i++) {
+            if(checkoutBookName.equals(currentBookList.get(i).getName())) {
+                currentBookList.remove(i);
+                return;
+            }
+        }
+    }
+
+    private void returnBook(String returnBookName) {
+        for (Book book : libraryBookList) {
+            if(returnBookName.equals(book.getName())) {
+                currentBookList.add(book);
                 return;
             }
         }
@@ -100,9 +128,16 @@ public class BibliotecaApp {
     }
 
     private void createBooks() {
-        bookList = new ArrayList<>();
+        libraryBookList = new ArrayList<>();
+        currentBookList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            bookList.add(
+            libraryBookList.add(
+                    BookBuilder.aBook()
+                            .withName("BOOK" + i)
+                            .withAuthor("AUTHOR" + i)
+                            .withYearPublished("2015.09")
+                            .build());
+            currentBookList.add(
                     BookBuilder.aBook()
                             .withName("BOOK" + i)
                             .withAuthor("AUTHOR" + i)
