@@ -19,9 +19,7 @@ public class BibliotecaApp {
 
         bibliotecaApp.printBookListTitle();
 
-        bibliotecaApp.libraryBookList.forEach(book -> {
-            printBookInfo(book);
-        });
+        bibliotecaApp.libraryBookList.forEach(BibliotecaApp::printBookInfo);
 
         bibliotecaApp.printSelectOptions();
 
@@ -31,9 +29,7 @@ public class BibliotecaApp {
             input = in.next();
             switch (input) {
                 case "LIST-BOOKS":
-                    bibliotecaApp.currentBookList.forEach(book -> {
-                        printBookInfo(book);
-                    });
+                    bibliotecaApp.currentBookList.forEach(BibliotecaApp::printBookInfo);
                     break;
                 case "CHECK-OUT":
                     System.out.print("Please input the book name:");
