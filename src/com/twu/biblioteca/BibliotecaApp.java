@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class BibliotecaApp {
 
@@ -22,6 +23,50 @@ public class BibliotecaApp {
         });
 
         bibliotecaApp.printSelectOptions();
+
+        Scanner in = new Scanner(System.in);
+        String input = "";
+        do {
+            input = in.next();
+            switch (input) {
+                case "LIST-BOOKS":
+                    bibliotecaApp.bookList.forEach(book -> {
+                        printBookInfo(book);
+                    });
+                    break;
+                case "CHECK-OUT":
+                    System.out.print("Please input the book name:");
+                    String bookName = in.next();
+                    if(bibliotecaApp.bookIsExist(bookName)) {
+                        bibliotecaApp.checkoutBook(bookName);
+                    } else {
+                        System.out.println("That book is not bailable.");
+                    }
+                    break;
+                case "RETURN":
+                    break;
+                case "QUIT":
+                    return;
+            }
+        } while (!"QUIT".equals(input));
+    }
+
+    private boolean bookIsExist(String bookName) {
+        for (Book book : bookList) {
+            if(book.getName().equals(bookName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void checkoutBook(String bookName) {
+        for (int i = 0; i < bookList.size(); i++) {
+            if(bookName.equals(bookList.get(i).getName())) {
+                bookList.remove(i);
+                return;
+            }
+        }
     }
 
     private void printWelcomeMessage() {
