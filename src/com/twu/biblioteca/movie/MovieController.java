@@ -43,4 +43,13 @@ public class MovieController {
     public void printMovieInfo(Movie movie) {
         System.out.println(String.format("     %s   %s   %s   %s", movie.getName(), movie.getDirector(), movie.getYear(), movie.getRating()));
     }
+
+    public void checkoutMovie(String checkoutMovieName) {
+        for (int i = 0; i < currentMovieList.size(); i++) {
+            if (checkoutMovieName.equals(currentMovieList.get(i).getName())) {
+                currentMovieList.remove(i);
+                return;
+            }
+        }
+    }
 }
