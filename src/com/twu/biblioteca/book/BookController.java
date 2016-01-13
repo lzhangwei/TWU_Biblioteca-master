@@ -17,13 +17,13 @@ public class BookController {
         currentBookList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             libraryBookList.add(
-                    BookBuilder.aBook()
+                    Book.BookBuilder.aBook()
                             .withName("BOOK" + i)
                             .withAuthor("AUTHOR" + i)
                             .withYearPublished("2015.09")
                             .build());
             currentBookList.add(
-                    BookBuilder.aBook()
+                    Book.BookBuilder.aBook()
                             .withName("BOOK" + i)
                             .withAuthor("AUTHOR" + i)
                             .withYearPublished("2015.09")
