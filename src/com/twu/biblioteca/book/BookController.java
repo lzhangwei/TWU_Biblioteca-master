@@ -1,5 +1,7 @@
 package com.twu.biblioteca.book;
 
+import com.twu.biblioteca.account.AccountController;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ public class BookController {
 
     private List<Book> libraryBookList;
     private List<Book> currentBookList;
+    private AccountController accountController;
 
     private void createBooks() {
         libraryBookList = new ArrayList<>();
@@ -29,6 +32,10 @@ public class BookController {
                             .withYearPublished("2015.09")
                             .build());
         }
+    }
+
+    public BookController(AccountController accountController) {
+        this.accountController = accountController;
     }
 
     public List<Book> getLibraryBookList() {
@@ -80,6 +87,7 @@ public class BookController {
     public void checkoutBook(String checkoutBookName) {
         for (int i = 0; i < currentBookList.size(); i++) {
             if (checkoutBookName.equals(currentBookList.get(i).getName())) {
+                accountController.addCheckoutBook(currentBookList.get(i));
                 currentBookList.remove(i);
                 return;
             }

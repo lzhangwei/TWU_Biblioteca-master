@@ -1,5 +1,8 @@
 package com.twu.biblioteca.account;
 
+import com.twu.biblioteca.book.Book;
+import com.twu.biblioteca.movie.Movie;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +27,10 @@ public class AccountController {
         }
     }
 
+    public Account getLoginAccount() {
+        return loginAccount;
+    }
+
     public String login(String libraryNumber, String password) {
         for (Account account : registeredAccountList) {
             if (libraryNumber.equals(account.getUser().getLibraryNumber()) && password.equals(account.getPassword())) {
@@ -32,5 +39,13 @@ public class AccountController {
             }
         }
         return "Login Error";
+    }
+
+    public void addCheckoutBook(Book book) {
+        loginAccount.addCheckoutBook(book);
+    }
+
+    public void addCheckoutMovie(Movie movie) {
+        loginAccount.addCheckoutMovie(movie);
     }
 }

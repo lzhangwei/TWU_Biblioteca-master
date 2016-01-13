@@ -48,4 +48,12 @@ public class Account {
     public void setCheckoutMovies(List<Movie> checkoutMovies) {
         this.checkoutMovies = checkoutMovies;
     }
+
+    public void addCheckoutBook(Book book) {
+        checkoutBooks.add(book);
+    }
+
+    public void addCheckoutMovie(Movie movie) {
+        checkoutMovies.add(movie);
+    }
 }

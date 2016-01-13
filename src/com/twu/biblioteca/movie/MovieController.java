@@ -1,5 +1,7 @@
 package com.twu.biblioteca.movie;
 
+import com.twu.biblioteca.account.AccountController;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ public class MovieController {
 
     private List<Movie> libraryMovieList;
     private List<Movie> currentMovieList;
+    private AccountController accountController;
 
     private void createMovies() {
         libraryMovieList = new ArrayList<>();
@@ -32,6 +35,10 @@ public class MovieController {
         }
     }
 
+    public MovieController(AccountController accountController) {
+        this.accountController = accountController;
+    }
+
     public List<Movie> getLibraryMovieList() {
         return libraryMovieList;
     }
@@ -47,6 +54,7 @@ public class MovieController {
     public void checkoutMovie(String checkoutMovieName) {
         for (int i = 0; i < currentMovieList.size(); i++) {
             if (checkoutMovieName.equals(currentMovieList.get(i).getName())) {
+                accountController.addCheckoutMovie(currentMovieList.get(i));
                 currentMovieList.remove(i);
                 return;
             }

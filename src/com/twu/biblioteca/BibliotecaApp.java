@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.account.AccountController;
 import com.twu.biblioteca.book.BookController;
 
 import java.util.Scanner;
@@ -7,7 +8,8 @@ import java.util.Scanner;
 public class BibliotecaApp {
 
     public static void main(String[] args) {
-        BookController bookController = new BookController();
+        AccountController accountController = new AccountController();
+        BookController bookController = new BookController(accountController);
         BibliotecaApp bibliotecaApp = new BibliotecaApp();
         bibliotecaApp.printWelcomeMessage();
 
