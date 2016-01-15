@@ -77,7 +77,7 @@ public class BookController implements Controller {
         return false;
     }
 
-    public boolean currentBookIsExist(String bookName) {
+    private boolean currentBookIsExist(String bookName) {
         for (Book book : currentBookList) {
             if (book.getName().equals(bookName)) {
                 return true;
