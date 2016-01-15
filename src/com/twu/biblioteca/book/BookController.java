@@ -1,11 +1,13 @@
 package com.twu.biblioteca.book;
 
+import com.twu.biblioteca.Constant;
+import com.twu.biblioteca.Controller;
 import com.twu.biblioteca.account.AccountController;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookController {
+public class BookController implements Controller {
 
     {
         createBooks();
@@ -84,26 +86,39 @@ public class BookController {
         return false;
     }
 
-    public void checkoutBook(String checkoutBookName) {
-        for (int i = 0; i < currentBookList.size(); i++) {
-            if (checkoutBookName.equals(currentBookList.get(i).getName())) {
-                accountController.addCheckoutBook(currentBookList.get(i));
-                currentBookList.remove(i);
-                return;
-            }
-        }
-    }
-
-    public void returnBook(String returnBookName) {
-        for (Book book : libraryBookList) {
-            if (returnBookName.equals(book.getName())) {
-                currentBookList.add(book);
-                return;
-            }
-        }
-    }
-
     public void printBookInfo(Book book) {
         System.out.println(String.format("     %s   %s   %s", book.getName(), book.getAuthor(), book.getYearPublished()));
+    }
+
+    @Override
+    public void list() {
+        this.getCurrentBookList().forEach(this::printBookInfo);
+    }
+
+    @Override
+    public String checkout(String checkoutBookName) {
+        if (currentBookIsExist(checkoutBookName)) {
+            for (int i = 0; i < currentBookList.size(); i++) {
+                if (checkoutBookName.equals(currentBookList.get(i).getName())) {
+                    accountController.addCheckoutBook(currentBookList.get(i));
+                    currentBookList.remove(i);
+                    return Constant.SUCCESS;
+                }
+            }
+        }
+        return Constant.ERROR;
+    }
+
+    @Override
+    public String returning(String returnBookName) {
+        if (bookIsExist(returnBookName)) {
+            for (Book book : libraryBookList) {
+                if (returnBookName.equals(book.getName())) {
+                    currentBookList.add(book);
+                    return Constant.SUCCESS;
+                }
+            }
+        }
+        return Constant.ERROR;
     }
 }

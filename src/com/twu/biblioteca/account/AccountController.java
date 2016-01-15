@@ -1,5 +1,7 @@
 package com.twu.biblioteca.account;
 
+import com.twu.biblioteca.Constant;
+import com.twu.biblioteca.Controller;
 import com.twu.biblioteca.book.Book;
 import com.twu.biblioteca.movie.Movie;
 
@@ -11,11 +13,12 @@ public class AccountController {
         createRegistedAccount();
     }
 
-    private List<Account> registeredAccountList = new ArrayList<>();
+    private List<Account> registeredAccountList;
 
     private Account loginAccount;
 
     private void createRegistedAccount() {
+        registeredAccountList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             registeredAccountList.add(new Account(
                     User.UserBuilder.anUser().withName("USER" + i)
@@ -35,10 +38,10 @@ public class AccountController {
         for (Account account : registeredAccountList) {
             if (libraryNumber.equals(account.getUser().getLibraryNumber()) && password.equals(account.getPassword())) {
                 loginAccount = account;
-                return "Login Success";
+                return Constant.SUCCESS;
             }
         }
-        return "Login Error";
+        return Constant.ERROR;
     }
 
     public void addCheckoutBook(Book book) {

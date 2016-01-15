@@ -3,6 +3,8 @@ package com.twu.biblioteca;
 import com.twu.biblioteca.account.AccountController;
 import com.twu.biblioteca.book.BookController;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class BibliotecaApp {
@@ -13,42 +15,37 @@ public class BibliotecaApp {
         BibliotecaApp bibliotecaApp = new BibliotecaApp();
         bibliotecaApp.printWelcomeMessage();
 
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("Please login!");
+        System.out.print("Please input the library number & password:");
+        String loginResult = accountController.login(in.nextLine(), in.nextLine());
+        while (loginResult.equals(Constant.ERROR)) {
+            System.out.println("The library number or password is error,please input again!");
+            loginResult = accountController.login(in.nextLine(), in.nextLine());
+        }
+
+        System.out.println("Login success!");
+
         bookController.printBookListTitle();
         bookController.getLibraryBookList().forEach(bookController::printBookInfo);
         bookController.printBookSelectOptions();
 
-        Scanner in = new Scanner(System.in);
-        String input = "";
-        do {
+        Map<String, KeyProcessor> processorMap = createProcessorMap();
+
+        String input = in.next();
+        while (!"QUIT".equals(input)) {
+            processorMap.get(input).process(bookController);
             input = in.next();
-            switch (input) {
-                case "LIST-BOOKS":
-                    bookController.getCurrentBookList().forEach(bookController::printBookInfo);
-                    break;
-                case "CHECK-OUT":
-                    System.out.print("Please input the book name:");
-                    String checkoutBookName = in.next();
-                    if (bookController.currentBookIsExist(checkoutBookName)) {
-                        bookController.checkoutBook(checkoutBookName);
-                    } else {
-                        System.out.println("That book is not bailable.");
-                    }
-                    break;
-                case "RETURN":
-                    System.out.print("Please input the book name:");
-                    String returnBookName = in.next();
-                    if (bookController.bookIsExist(returnBookName)) {
-                        bookController.returnBook(returnBookName);
-                    } else {
-                        System.out.println("That book is not bailable.");
-                    }
-                    break;
-                case "QUIT":
-                    return;
-                default:
-                    System.out.println("Select a valid option!");
-            }
-        } while (!"QUIT".equals(input));
+        }
+    }
+
+    private static Map<String, KeyProcessor> createProcessorMap() {
+        Map<String, KeyProcessor> processorMap = new HashMap<>();
+        processorMap.put("LIST", new ListProcessor());
+        processorMap.put("CHECK-OUT", new CheckoutProcessor());
+        processorMap.put("RETURN", new ReturnProcessor());
+        return processorMap;
     }
 
     private void printWelcomeMessage() {

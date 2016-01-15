@@ -1,5 +1,6 @@
 package com.twu.biblioteca.movie;
 
+import com.twu.biblioteca.Controller;
 import com.twu.biblioteca.account.AccountController;
 
 import java.util.ArrayList;
