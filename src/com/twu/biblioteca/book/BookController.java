@@ -21,18 +21,8 @@ public class BookController implements Controller {
         libraryBookList = new ArrayList<>();
         currentBookList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            libraryBookList.add(
-                    Book.BookBuilder.aBook()
-                            .withName("BOOK" + i)
-                            .withAuthor("AUTHOR" + i)
-                            .withYearPublished("2015.09")
-                            .build());
-            currentBookList.add(
-                    Book.BookBuilder.aBook()
-                            .withName("BOOK" + i)
-                            .withAuthor("AUTHOR" + i)
-                            .withYearPublished("2015.09")
-                            .build());
+            libraryBookList.add(new Book("BOOK" + i, "AUTHOR" + i, "2015.09"));
+            currentBookList.add(new Book("BOOK" + i, "AUTHOR" + i, "2015.09"));
         }
     }
 

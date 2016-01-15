@@ -1,6 +1,5 @@
 package com.twu.biblioteca.movie;
 
-import com.twu.biblioteca.Controller;
 import com.twu.biblioteca.account.AccountController;
 
 import java.util.ArrayList;
@@ -19,20 +18,8 @@ public class MovieController {
         libraryMovieList = new ArrayList<>();
         currentMovieList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            libraryMovieList.add(
-                    Movie.MovieBuilder.aMovie()
-                            .withName("MOVIE" + i)
-                            .withDirector("DIRECTOR" + i)
-                            .withYear("2015")
-                            .withRating("2")
-                            .build());
-            currentMovieList.add(
-                    Movie.MovieBuilder.aMovie()
-                            .withName("MOVIE" + i)
-                            .withDirector("DIRECTOR" + i)
-                            .withYear("2015")
-                            .withRating("2")
-                            .build());
+            libraryMovieList.add(new Movie("MOVIE" + i, "DIRECTOR" + i, "2015", "2"));
+            currentMovieList.add(new Movie("MOVIE" + i, "DIRECTOR" + i, "2015", "2"));
         }
     }
 

@@ -20,13 +20,9 @@ public class AccountController {
     private void createRegistedAccount() {
         registeredAccountList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            registeredAccountList.add(new Account(
-                    User.UserBuilder.anUser().withName("USER" + i)
-                            .withEmail("EMAIL" + i)
-                            .withPhone("PHONE" + i)
-                            .withLibraryNumber("111-111" + i)
-                            .build(), "password" + i
-            ));
+            registeredAccountList.add(
+                    new Account(new User("111-111" + i, "USER" + i, "EMAIL" + i, "PHONE" + i), "password" + i
+                    ));
         }
     }
 
